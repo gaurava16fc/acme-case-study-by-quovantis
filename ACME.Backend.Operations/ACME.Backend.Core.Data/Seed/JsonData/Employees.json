@@ -1,0 +1,30 @@
+[
+  {
+    "Name": "Schneider",
+    "Gender": "female",
+    "Password": "password",
+    "DateOfBirth": "1979-11-20",
+    "DateOfJoining": "2018-09-30",
+    "IsActive": true,
+    "Email": "schneiderpatrick@olucore.com",
+    "PhoneNumber": "9394182303",
+    "CreatedOn": "2014-10-09",
+    "ModifiedOn": "2014-10-09",
+    "City": "Tolu",
+    "Country": "Mayotte"
+  },
+  {
+    "Name": "Sandoval",
+    "Gender": "female",
+    "Password": "password",
+    "DateOfBirth": "1997-05-26",
+    "DateOfJoining": "2009-09-24",
+    "IsActive": true,
+    "Email": "sandovalpatrick@olucore.com",
+    "PhoneNumber": "9505602599",
+    "CreatedOn": "2017-06-19",
+    "ModifiedOn": "2017-06-19",
+    "City": "Shindler",
+    "Country": "Moldova"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "Name": "Mejia",
+    "Gender": "female",
+    "Password": "password",
+    "DateOfBirth": "1982-02-23",
+    "DateOfJoining": "2006-04-17",
+    "IsActive": true,
+    "Email": "mejiapatrick@olucore.com",
+    "PhoneNumber": "9285712494",
+    "CreatedOn": "2016-06-10",
+    "ModifiedOn": "2016-06-10",
+    "City": "Chical",
+    "Country": "Australia"
+  },
+  {
+    "Name": "Luna",
+    "Gender": "male",
+    "Password": "password",
+    "DateOfBirth": "1992-11-09",
+    "DateOfJoining": "2019-01-11",
+    "IsActive": true,
+    "Email": "lunapatrick@olucore.com",
+    "PhoneNumber": "9665623661",
+    "CreatedOn": "2005-05-07",
+    "ModifiedOn": "2005-05-07",
+    "City": "Wescosville",
+    "Country": "Gambia"
+  },
+  {
+    "Name": "Joyner",
+    "Gender": "male",
+    "Password": "password",
+    "DateOfBirth": "2000-05-30",
+    "DateOfJoining": "2019-04-23",
+    "IsActive": true,
+    "Email": "joynerpatrick@olucore.com",
+    "PhoneNumber": "9764222429",
+    "CreatedOn": "2009-02-17",
+    "ModifiedOn": "2009-02-17",
+    "City": "Lafferty",
+    "Country": "Madagascar"
+  },
+  {
+    "Name": "Hollie",
+    "Gender": "female",
+    "Salary": "64,053.90",
+    "Password": "password",
+    "DateOfBirth": "1978-09-09",
+    "DateOfJoining": "2006-12-24",
+    "IsActive": true,
+    "Email": "holliepatrick@olucore.com",
+    "PhoneNumber": "8765853919",
+    "CreatedOn": "2001-08-20",
+    "ModifiedOn": "2001-08-20",
+    "City": "Campo",
+    "Country": "Philippines"
+  }
+]

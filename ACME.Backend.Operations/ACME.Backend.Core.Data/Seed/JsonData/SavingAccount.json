@@ -1,0 +1,47 @@
+[
+  {
+    "IsAccountLocked": false,
+    "CustomerId": "1",
+    "MinimumBalance": "1000.00",
+    "TotalBalance": "3000.00",
+    "IsActive": true,
+    "CreatedOn": "2020-06-10",
+    "ModifiedOn": "2020-07-10"
+  },
+  {
+    "IsAccountLocked": false,
+    "CustomerId": "2",
+    "MinimumBalance": "1000.00",
+    "TotalBalance": "12000.00",
+    "IsActive": true,
+    "CreatedOn": "2020-07-11",
+    "ModifiedOn": "2020-08-10"
+  },
+  {
+    "IsAccountLocked": false,
+    "CustomerId": "3",
+    "MinimumBalance": "1000.00",
+    "TotalBalance": "2500.00",
+    "IsActive": true,
+    "CreatedOn": "2020-06-10",
+    "ModifiedOn": "2020-08-13"
+  },
+  {
+    "IsAccountLocked": false,
+    "CustomerId": "4",
+    "MinimumBalance": "1000.00",
+    "TotalBalance": "1000.00",
+    "IsActive": true,
+    "CreatedOn": "2020-07-10",
+    "ModifiedOn": "2020-07-10"
+  },
+  {
+    "IsAccountLocked": false,
+    "CustomerId": "2",
+    "MinimumBalance": "1000.00",
+    "TotalBalance": "3000.00",
+    "IsActive": true,
+    "CreatedOn": "2020-06-10",
+    "ModifiedOn": "2020-08-21"
+  }
+]
