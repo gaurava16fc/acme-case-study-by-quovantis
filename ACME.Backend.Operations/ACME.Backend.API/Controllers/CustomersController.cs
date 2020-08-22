@@ -13,7 +13,7 @@ namespace ACME.Backend.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerRepository _repo;
@@ -38,6 +38,7 @@ namespace ACME.Backend.API.Controllers
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> GetCustomers()
         {
+            this._logger.LogInformation(User.FindFirst(System.Security.Claims.ClaimTypes.UserData).Value);
             var _customers = await _repo.FindAll().ToListAsync();
             var _customersListToReturn = _mapper.Map<IEnumerable<CustomerForDetailedDTO>>(_customers);
             return Ok(_customersListToReturn);

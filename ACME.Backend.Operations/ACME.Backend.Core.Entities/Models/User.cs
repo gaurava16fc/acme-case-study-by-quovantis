@@ -11,6 +11,7 @@ namespace ACME.Backend.Core.Entities.Models
         public string Gender { get; set; }
         public UserRole UserRole { get; set; }
         public int UserRoleId { get; set; }
+        public int? UserMappedWithEntityId { get; set; }
         public bool IsActive { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }

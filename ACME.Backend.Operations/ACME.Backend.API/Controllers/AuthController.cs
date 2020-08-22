@@ -56,7 +56,8 @@ namespace ACME.Backend.API.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
                 new Claim(ClaimTypes.Name, userFromRepo.UserName),
-                new Claim(ClaimTypes.Role,userFromRepo.UserRole.RoleName)
+                new Claim(ClaimTypes.Role,userFromRepo.UserRole.RoleName),
+                new Claim(ClaimTypes.UserData, ((int)userFromRepo.UserMappedWithEntityId).ToString())
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

@@ -9,12 +9,13 @@ using AutoMapper;
 using ACME.Backend.Core.Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
+using ACME.Backend.API.Helper;
 
 namespace ACME.Backend.API.Controllers
 {
     [Route("api/customers/{customerId}/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class SavingAccountController : ControllerBase
     {
         private readonly ISavingAccountRepository _repo;
@@ -35,6 +36,26 @@ namespace ACME.Backend.API.Controllers
             this._logger = logger;
         }
 
+        private bool IsCustomerRole
+        {
+            get
+            {
+                string _userRole = CommonUtils.GetLoggedInUserRole(User);
+                return _userRole.Trim().ToLower().Equals("customer");
+            }
+        }
+
+        private bool IsCustomerParamValid(int customerId)
+        {
+            if (IsCustomerRole)
+            {
+                int _userMappedEntityId = CommonUtils.GetLoggedInUserMappedEntityId(User);
+                if (customerId != _userMappedEntityId)
+                    return false;
+            }
+            return true;
+        }
+
         /* 
          * /api/customers/2/SavingAccount/ACMEIN9111000002/details/
          * */
@@ -42,12 +63,15 @@ namespace ACME.Backend.API.Controllers
         [Route("{acctNum}/details")]
         public async Task<IActionResult> GetCustomerAccountDetail(int customerId, string acctNum)
         {
+            if (string.IsNullOrEmpty(acctNum))
+                return BadRequest("Account Number can not be empty");
+
+            if (!IsCustomerParamValid(customerId))
+                return Unauthorized(@"Customer mismatch found, hence this transaction is aborted.");
+
             var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
             if (_customer == null)
                 return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is not found");
-
-            if (string.IsNullOrEmpty(acctNum))
-                return BadRequest("Account Number can not be empty");
 
             var _custSavingAccountDetail = await _repo.GetCustomerAccountDetail(customerId, acctNum).FirstOrDefaultAsync();
             if (_custSavingAccountDetail == null)
@@ -66,6 +90,9 @@ namespace ACME.Backend.API.Controllers
         [Route("getActiveAccounts")]
         public async Task<IActionResult> GetCustomerOnlyActiveAccounts(int customerId)
         {
+            if (!IsCustomerParamValid(customerId))
+                return Unauthorized(@"Customer mismatch found, hence this transaction is aborted.");
+
             var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
             if (_customer == null)
                 return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is not found");
@@ -87,6 +114,9 @@ namespace ACME.Backend.API.Controllers
         [Route("getAllAccounts")]
         public async Task<IActionResult> GetCustomerAllAccounts(int customerId)
         {
+            if (!IsCustomerParamValid(customerId))
+                return Unauthorized(@"Customer mismatch found, hence this transaction is aborted.");
+
             var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
             if (_customer == null)
                 return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is not found");
@@ -106,15 +136,15 @@ namespace ACME.Backend.API.Controllers
         //[Authorize(Roles = "Customer")]
         public async Task<IActionResult> DepositFunds(int customerId, [FromBody] BankTransactionRequestDTO bankTransactionRequestDTO)
         {
-            var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
-            if (_customer == null)
-                return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is invalid");
-
-            if (customerId != bankTransactionRequestDTO.CustomerId)
+            if ((!IsCustomerParamValid(customerId)) || (customerId != bankTransactionRequestDTO.CustomerId))
                 return Unauthorized(@"Customer mismatch found, hence this transaction is aborted.");
 
             if (string.IsNullOrEmpty(bankTransactionRequestDTO.AccountNumber))
                 return BadRequest("Account Number can not be empty");
+            
+            var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
+            if (_customer == null)
+                return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is invalid");
 
             var _custSavingAccountDetail = await _repo.GetCustomerAccountDetail(customerId, bankTransactionRequestDTO.AccountNumber).FirstOrDefaultAsync();
             if (_custSavingAccountDetail == null)
@@ -158,15 +188,15 @@ namespace ACME.Backend.API.Controllers
         [Authorize(Roles = "Customer")]
         public async Task<IActionResult> WithdrawFunds(int customerId, [FromBody] BankTransactionRequestDTO bankTransactionRequestDTO)
         {
-            var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
-            if (_customer == null)
-                return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is invalid");
-
-            if (customerId != bankTransactionRequestDTO.CustomerId)
+            if ((!IsCustomerParamValid(customerId)) || (customerId != bankTransactionRequestDTO.CustomerId))
                 return Unauthorized(@"Customer mismatch found, hence this transaction is aborted.");
 
             if (string.IsNullOrEmpty(bankTransactionRequestDTO.AccountNumber))
                 return BadRequest("Account Number can not be empty");
+
+            var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
+            if (_customer == null)
+                return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is invalid");
 
             var _custSavingAccountDetail = await _repo.GetCustomerAccountDetail(customerId, bankTransactionRequestDTO.AccountNumber).FirstOrDefaultAsync();
             if (_custSavingAccountDetail == null)
@@ -211,12 +241,12 @@ namespace ACME.Backend.API.Controllers
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> LockSavingAccount(int customerId, string acctNum)
         {
+            if (string.IsNullOrEmpty(acctNum))
+                return BadRequest("Account Number can not be empty");
+
             var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
             if (_customer == null)
                 return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is not found");
-
-            if (string.IsNullOrEmpty(acctNum))
-                return BadRequest("Account Number can not be empty");
 
             var _custSavingAccountDetail = await _repo.GetCustomerAccountDetail(customerId, acctNum).FirstOrDefaultAsync();
             if (_custSavingAccountDetail == null)
@@ -237,12 +267,12 @@ namespace ACME.Backend.API.Controllers
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> UnlockSavingAccount(int customerId, string acctNum)
         {
+            if (string.IsNullOrEmpty(acctNum))
+                return BadRequest("Account Number can not be empty");
+
             var _customer = await _repo.FindByCondition(e => e.CustomerId == customerId).FirstOrDefaultAsync();
             if (_customer == null)
                 return NotFound(@"Customer with Id = {" + Convert.ToString(customerId) + "} is invalid");
-
-            if (string.IsNullOrEmpty(acctNum))
-                return BadRequest("Account Number can not be empty");
 
             var _custSavingAccountDetail = await _repo.GetCustomerAccountDetail(customerId, acctNum).FirstOrDefaultAsync();
             if (_custSavingAccountDetail == null)
@@ -258,7 +288,6 @@ namespace ACME.Backend.API.Controllers
             await _repo.Update(_custSavingAccountDetail);
             return Ok();
         }
-
 
     }
 }

@@ -17,12 +17,9 @@ namespace ACME.Backend.Core.Data.Repository
 
         public async Task<User> Login(string username, string password)
         {
-            //var userWithRoleDetails = await _context.Users.Include(u=>u.User)
-
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
             if (user == null) return null;
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt)) return null;
-            //var userRoles = await _context.UserRoles.ToListAsync();
             int uid = user.UserRoleId;
             user.UserRole = await _context.UserRoles.FirstOrDefaultAsync(ur => ur.Id == uid);
             return user;
