@@ -10,6 +10,7 @@ namespace ACME.Backend.API.Helper
         public AutoMapperProfiles()
         {
             CreateMap<User, UserDetailsToReturnDTO>().ReverseMap();
+            CreateMap<UserRole, UserRoleDTO>().ReverseMap();
             CreateMap<Employee, EmployeeForDetailedDTO>().ReverseMap();
             CreateMap<Customer, CustomerForDetailedDTO>().ReverseMap();
             CreateMap<SavingAccount, SavingAccountToReturnDTO>().ReverseMap();

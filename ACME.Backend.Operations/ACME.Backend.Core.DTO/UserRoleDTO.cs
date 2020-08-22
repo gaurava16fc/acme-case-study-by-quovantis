@@ -6,6 +6,6 @@ namespace ACME.Backend.Core.DTO
     {
         public int Id { get; set; }
         public string RoleName { get; set; }
-        public ICollection<UserDetailsToReturnDTO> MappedUsers { get; set; }
+        //public ICollection<UserDetailsToReturnDTO> MappedUsers { get; set; }
     }
 }

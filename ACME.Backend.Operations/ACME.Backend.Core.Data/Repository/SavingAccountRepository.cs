@@ -25,7 +25,7 @@ namespace ACME.Backend.Core.Data.Repository
 
         public IQueryable<SavingAccount> GetCustomerAllAccounts(int CustomerId)
         {
-            return FindByCondition(sa => sa.CustomerId == CustomerId && sa.IsActive).AsQueryable();
+            return FindByCondition(sa => sa.CustomerId == CustomerId).AsQueryable();
         }
 
         public double? DepositFund(int CustomerId, string AccountNumber, double AmountToDeposit)
@@ -49,9 +49,7 @@ namespace ACME.Backend.Core.Data.Repository
             return 0;
         }
 
-
         #region Helper Method(s)
-
         private double? GetCustomerAccountBalance(int CustomerId, string AccountNumber)
         {
             double? totalAmount = 0;
@@ -64,7 +62,6 @@ namespace ACME.Backend.Core.Data.Repository
         {
             return withdrawlAmount < totalFundsInAccount;
         }
-
         #endregion
     }
 }

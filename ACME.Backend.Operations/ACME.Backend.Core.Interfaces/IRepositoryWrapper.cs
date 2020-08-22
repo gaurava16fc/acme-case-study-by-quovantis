@@ -6,5 +6,6 @@
         IEmployeeRepository EmployeeRepository { get; }
         ICustomerRepository CustomerRepository { get; }
         ISavingAccountRepository SavingAccountRepository { get; }
+        IBankTransactionRepository BankTransactionRepository { get; }
     }
 }

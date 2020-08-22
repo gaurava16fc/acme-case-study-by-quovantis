@@ -3,14 +3,16 @@ using System;
 using ACME.Backend.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ACME.Backend.Core.Data.Migrations
 {
     [DbContext(typeof(RepositoryDBContext))]
-    partial class RepositoryDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200821173712_Added_BankTransactionDetail")]
+    partial class Added_BankTransactionDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

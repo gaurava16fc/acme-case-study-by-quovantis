@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using ACME.Backend.Core.DTO;
 using ACME.Backend.Core.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 //using Newtonsoft.Json;
 
 namespace ACME.Backend.API.Controllers
@@ -49,10 +51,12 @@ namespace ACME.Backend.API.Controllers
             var userFromRepo = await _repo.Login(userForLoginDTO.UserName, userForLoginDTO.Password);
             if (userFromRepo == null)
                 return Unauthorized();
+
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name, userFromRepo.UserName)
+                new Claim(ClaimTypes.Name, userFromRepo.UserName),
+                new Claim(ClaimTypes.Role,userFromRepo.UserRole.RoleName)
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
@@ -64,12 +68,12 @@ namespace ACME.Backend.API.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            //var userToReturn = _mapper.Map<UserDetailsToReturnDTO>(userFromRepo);
+            var userToReturn = _mapper.Map<UserDetailsToReturnDTO>(userFromRepo);
             return Ok(new
             {
-                token = tokenHandler.WriteToken(token)
-                //,
-                //user = JsonConvert.SerializeObject(userToReturn)
+                token = tokenHandler.WriteToken(token),
+                user = JsonConvert.SerializeObject(userToReturn)
+                //user = userToReturn
             });
         }
     }

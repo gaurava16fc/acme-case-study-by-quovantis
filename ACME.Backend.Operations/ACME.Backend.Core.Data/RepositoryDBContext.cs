@@ -14,5 +14,6 @@ namespace ACME.Backend.Core.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<SavingAccount> SavingAccounts { get; set; }
+        public DbSet<BankTransactionDetail> BankTransactionDetails { get; set; }
     }
 }

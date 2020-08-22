@@ -1,10 +1,9 @@
-using ACME.Backend.API.Helper;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ACME.Backend.API.Helper;
 
 namespace ACME.Backend.API
 {
@@ -22,11 +21,9 @@ namespace ACME.Backend.API
         {
             services.ConfigureSQLiteDBContext(Configuration);
             services.AddCors();
-            //services.AddAutoMapper(typeof(Startup).Assembly);
-            services.ConfigureAddOnServices();
+            services.ConfigureAddOnServices(Configuration);
             services.ConfigurSeedDataIfNotExists();
             services.ConfigureRepositoryWrapper();
-            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

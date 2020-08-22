@@ -74,6 +74,19 @@ namespace ACME.Backend.Core.Data.Seed
                     context.SavingAccounts.Add(svngAcc);
                 }
                 context.SaveChanges();
+
+                //populating account number if missing into database table....
+                var saRows = context.SavingAccounts.Where(sa => string.IsNullOrEmpty(sa.AccountNumber)).ToList();
+                if (saRows.Count > 0)
+                {
+                    foreach (SavingAccount sa in saRows)
+                    {
+                        if (string.IsNullOrEmpty(sa.AccountNumber))
+                        {
+                            sa.AccountNumber = "ACMEIN91110" + sa.Id.ToString().PadLeft(5, '0');
+                        }
+                    }
+                }
             }
 
         }

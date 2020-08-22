@@ -4,6 +4,7 @@ using ACME.Backend.Core.Data.Repository;
 using ACME.Backend.Core.Data.Seed;
 using ACME.Backend.Core.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,10 +43,27 @@ namespace ACME.Backend.API.Helper
 
         public static void ConfigureAddOnServices
             (
-                this IServiceCollection services
+                this IServiceCollection services,
+                IConfiguration configuration
             )
         {
+            services.AddControllers().AddNewtonsoftJson(opt => {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.ASCII.GetBytes(
+                                    configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
     }
 }

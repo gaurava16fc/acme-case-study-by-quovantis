@@ -10,6 +10,7 @@ namespace ACME.Backend.Core.Data.Repository
         private IEmployeeRepository _employeeRepository;
         private IAuthRepository _authRepository;
         private ISavingAccountRepository _savingAccountRepository;
+        private IBankTransactionRepository _bankTransactionRepository;
 
         public RepositoryWrapper(RepositoryDBContext repositoryDBContext)
         {
@@ -61,6 +62,18 @@ namespace ACME.Backend.Core.Data.Repository
                     _savingAccountRepository = new SavingAccountRepository(_repositoryDBContext);
                 }
                 return _savingAccountRepository;
+            }
+        }
+        
+        public IBankTransactionRepository BankTransactionRepository
+        {
+            get
+            {
+                if (_bankTransactionRepository == null)
+                {
+                    _bankTransactionRepository = new BankTransactionRepository(_repositoryDBContext);
+                }
+                return _bankTransactionRepository;
             }
         }
     }
