@@ -1,0 +1,19 @@
+.card-header {
+    /* padding: 0px; */
+}
+
+
+.card-body {
+    background-color: white;
+    color: #000;
+}
+
+.row .entity-label {
+    color: blue;
+}
+
+.vertical-align{
+    display: flex;
+    align-items: center;
+}
+

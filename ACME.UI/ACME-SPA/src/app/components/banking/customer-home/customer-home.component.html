@@ -1,0 +1,67 @@
+
+<div class="container">
+    <h3>Customers List</h3>
+    <hr/>
+    Filter:
+    <input
+      type="text"
+      [(ngModel)]="searchByCustomerName"
+      placeholder="Search By Name"
+      style="width: 300px;"
+    />
+    <hr />
+    
+    <div class="card text-white bg-primary" *ngFor="let customer of customers | customerFilter: searchByCustomerName">
+      <div class="card-header">
+        <h3 class="card-title">{{ customer.name }}
+          <div class="float-right">
+            <button class="btn btn-success" 
+                style="margin-left:2px;"
+                (click)="viewCustomerAccounts(customer.id)">View Saving Account(s)</button>
+        </div> 
+        </h3>
+
+      </div>
+  
+      <div class="card-body">
+        <div class="col-10">
+          <div class="row vertical-align">
+            <!-- <div class="col-4">
+              <div class="float-right">
+                  <button class="btn btn-danger" style="margin-left:2px;" (click)="onLockAccount(customer.id, '')">Lock</button>
+                  <button class="btn btn-success" style="margin-left:2px;" (click)="onUnlockAccount(customer.id, '')">Unlock</button>
+              </div> 
+            </div> -->
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6 entity-label">Gender</div>
+                <div class="col-6">: {{ customer.gender | titlecase}}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Date of Birth</div>
+                <div class="col-6">: {{ customer.dateOfBirth | date }}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Account Opened</div>
+                <div class="col-6">: {{ customer.dateOfJoining | date }}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Phone</div>
+                <div class="col-6">: {{ customer.phoneNumber }}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Email</div>
+                <div class="col-6">: {{ customer.email}}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Location</div>
+                <div class="col-6">
+                  : {{ customer.city }}, {{ customer.country}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

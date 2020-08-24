@@ -1,0 +1,23 @@
+
+.card-header {
+    /* padding: 0px; */
+    background: darkslategray !important;
+    color: chartreuse !important;
+}
+
+.acct-num-span {
+    color: white !important;
+}
+.card-body {
+    background-color: white;
+    color: #000;
+}
+
+.row .entity-label {
+    color: blue;
+}
+
+.vertical-align{
+    display: flex;
+    align-items: center;
+}

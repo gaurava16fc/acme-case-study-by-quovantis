@@ -1,0 +1,66 @@
+<div class="container">
+  <!-- <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Customer Name: {{selectedCustomer?.name}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Phone: {{selectedCustomer?.phoneNumber}}</h6>
+      <p class="card-text">Email: {{selectedCustomer?.email}}</p>
+    </div>
+  </div> -->
+
+    <h3> Saving Account List: </h3>
+    <!-- <h3 class="card-title">{{ customer.name }} </h3> -->
+    <div class="card text-white bg-primary" *ngFor="let savingAccount of savingAccounts ">
+      <div class="card-header">
+        <h3 class="card-title">Account# <span class="acct-num-span">{{ savingAccount.accountNumber }}</span>
+            <div class="float-right">
+                <button class="btn btn-danger" 
+                    style="margin-left:2px;" 
+                    (click)="onLockAccount(savingAccount.id, savingAccount.accountNumber)">Lock</button>
+                <button class="btn btn-success" 
+                    style="margin-left:2px;" 
+                    (click)="onUnlockAccount(savingAccount.id, savingAccount.accountNumber)">Unlock</button>
+            </div> 
+        </h3>
+
+      </div>
+  
+      <div class="card-body">
+        <div class="col-10">
+          <div class="row vertical-align">
+            <!-- <div class="col-4">
+              <div class="float-right">
+                  <button class="btn btn-danger" style="margin-left:2px;" (click)="onLockAccount(customer.id, '')">Lock</button>
+                  <button class="btn btn-success" style="margin-left:2px;" (click)="onUnlockAccount(customer.id, '')">Unlock</button>
+              </div> 
+            </div> -->
+            <div class="col-12">
+              <div class="row">
+                <div class="col-6 entity-label">Account Locked Status</div>
+                <div class="col-6">: {{ savingAccount.isAccountLocked?"True":"False"}}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Customer ID</div>
+                <div class="col-6">: {{ savingAccount.customerId }}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Minimum Balance</div>
+                <div class="col-6">: {{ savingAccount.minimumBalance }}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Total Balance</div>
+                <div class="col-6">: {{ savingAccount.totalBalance }}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Active Status</div>
+                <div class="col-6">: {{ savingAccount.isActive?"True":"False"}}</div>
+              </div>
+              <div class="row">
+                <div class="col-6 entity-label">Last Transaction Date</div>
+                <div class="col-6">: {{ savingAccount.modifiedOn | date}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
