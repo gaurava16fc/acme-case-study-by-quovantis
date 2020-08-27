@@ -5,6 +5,8 @@ using ACME.Backend.Core.Data.Seed;
 using ACME.Backend.Core.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,7 +52,9 @@ namespace ACME.Backend.API.Helper
             services.AddControllers().AddNewtonsoftJson(opt => {
                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
+
             services.AddAutoMapper(typeof(Startup).Assembly);
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -64,6 +68,16 @@ namespace ACME.Backend.API.Helper
                         ValidateAudience = false
                     };
                 });
+
+            //services.AddControllers(config =>
+            //{
+            //    config.RespectBrowserAcceptHeader = true;
+            //    config.ReturnHttpNotAcceptable = true;
+
+            //    //MvcOptions mvcOptions = new MvcOptions();
+            //    //config.InputFormatters.Add(new XmlSerializerInputFormatter());
+            //    config.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+            //}).AddXmlSerializerFormatters().AddXmlDataContractSerializerFormatters();
         }
     }
 }

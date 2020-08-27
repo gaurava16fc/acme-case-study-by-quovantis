@@ -33,6 +33,7 @@ namespace ACME.Backend.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.ConfigureUnhandledExceptionsHandler();
             app.UseCors(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             app.UseRouting();
